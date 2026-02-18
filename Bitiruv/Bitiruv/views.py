@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from accounts.models import Profile
+from apps.accounts.models import Profile
 
 def home(request):
     profiles = Profile.objects.all()
