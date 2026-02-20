@@ -1,4 +1,4 @@
-from accounts.models import Profile
+from apps.accounts.models import Profile
 from django.shortcuts import render
 
 def home(request):
