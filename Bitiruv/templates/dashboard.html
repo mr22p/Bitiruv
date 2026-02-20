@@ -1,48 +1,200 @@
 <!DOCTYPE html>
-<html>
+<html lang="uz">
 <head>
-<title>Dashboard</title>
-<style>
-body { font-family:Arial; background:#f4f6f9; padding:40px; }
-.card {
-    background:white;
-    padding:20px;
-    margin:15px;
-    border-radius:10px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    display:inline-block;
-    width:250px;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#f4f6f9;
+      padding:40px;
+      margin:0;
+    }
+
+    .container{
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    h2{ margin-bottom: 6px; }
+    h3{ margin-top: 25px; }
+
+    .cards{
+      display:flex;
+      gap:18px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .card-link{
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card{
+      background:white;
+      padding:18px;
+      border-radius:12px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.1);
+      width:260px;
+      transition: 0.15s ease;
+      border: 1px solid #eef1f5;
+    }
+
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow:0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    .muted{ color:#6b7280; margin:0; }
+
+    .my-profile{
+      margin-top: 18px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.1);
+      border: 1px solid #eef1f5;
+      max-width: 700px;
+    }
+
+    .row{
+      display:flex;
+      gap:18px;
+      align-items:flex-start;
+      flex-wrap: wrap;
+    }
+
+    .avatar{
+      width: 140px;
+      height: 140px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1px solid #eef1f5;
+      background: #fafafa;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:10px;
+      background:#2563eb;
+      color:white;
+      text-decoration:none;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .btn.secondary{
+      background:#111827;
+    }
+
+    .actions{
+      margin-top: 10px;
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+    }
+
+    .pill{
+      display:inline-block;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background:#eef2ff;
+      color:#3730a3;
+      margin-top: 8px;
+    }
+  </style>
 </head>
+
 <body>
+  <div class="container">
 
-<h2>Salom {{ user.username }} 👋</h2>
-<h3>Bitiruvchilar:</h3>
+    <h2>Salom {{ user.username }} 👋</h2>
+    <p class="muted">Dashboard sahifangiz</p>
 
-<div class="card">
-<h4>Ali Valiyev</h4>
-<p>Python Telegram Bot</p>
-</div>
+    <h3>Bitiruvchilar:</h3>
 
-<div class="card">
-<h4>Madina Karimova</h4>
-<p>Django Web Project</p>
-</div>
+    <div class="cards">
 
- {% if user.profile %}
-    <img src="{{ user.profile.image.url }}" width="150">
-    <h3>{{ user.profile.project_name }}</h3>
-    <p>{{ user.profile.project_description }}</p>
+      <!-- 1-karta -->
+      <a class="card-link" href="{% url 'profile_detail' username='ali' %}">
+        <div class="card">
+          <h4>Ali Valiyev</h4>
+          <p class="muted">Python Telegram Bot</p>
+          <span class="pill">Profilga kirish</span>
+        </div>
+      </a>
 
-    {% if user.profile.project_link %}
-        <a href="{{ user.profile.project_link }}" target="_blank">
-            Loyihani ko'rish
+      <!-- 2-karta -->
+      <a class="card-link" href="{% url 'profile_detail' username='madina' %}">
+        <div class="card">
+          <h4>Madina Karimova</h4>
+          <p class="muted">Django Web Project</p>
+          <span class="pill">Profilga kirish</span>
+        </div>
+      </a>
+
+      <!-- Agar sizda bazadan profillar ro'yxati kelsa, yuqoridagi 2 ta kartani olib tashlab,
+           shu for-loopni ishlatasiz:
+
+      {% for p in profiles %}
+        <a class="card-link" href="{% url 'profile_detail' username=p.user.username %}">
+          <div class="card">
+            <h4>{{ p.user.get_full_name|default:p.user.username }}</h4>
+            <p class="muted">{{ p.project_name }}</p>
+            <span class="pill">Profilga kirish</span>
+          </div>
         </a>
-    {% endif %}
-{% else %}
-    <a href="{% url 'create_profile' %}">Profil yaratish</a>
-{% endif %}
+      {% endfor %}
 
+      -->
+
+    </div>
+
+    <h3>Mening profilim:</h3>
+
+    <!-- user.profile bor-yo'qligini xavfsiz tekshirish uchun:
+         view'dan my_profile yuborish eng zo'r.
+         Hozircha template ichida try-catch yo'q, shuning uchun has_profile degan flagni view'da yuborib qo'ygan yaxshi.
+         Lekin minimal variant: profile bo'lsa ko'rsatish. -->
+    {% if user.profile %}
+    
+      <div class="my-profile">
+        <div class="row">
+          {% if user.profile.image %}
+            <img class="avatar" src="{{ user.profile.image.url }}" alt="Profil rasmi">
+          {% else %}
+            <img class="avatar" src="https://via.placeholder.com/140" alt="Profil rasmi">
+          {% endif %}<div>
+            <h3 style="margin-top:0;">{{ user.profile.project_name }}</h3>
+            <p class="muted">{{ user.profile.project_description }}</p>
+
+            <div class="actions">
+              <a class="btn secondary" href="{% url 'profile_detail' username=user.username %}">
+                Profilimga kirish
+              </a>
+
+              {% if user.profile.project_link %}
+                <a class="btn" href="{{ user.profile.project_link }}" target="_blank">
+                  Loyihani ko‘rish
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {% else %}
+      <div class="my-profile">
+        <p class="muted">Siz hali profil yaratmagansiz.</p>
+        <a class="btn" href="{% url 'create_profile' %}">Profil yaratish</a>
+      </div>
+    {% endif %}
+
+  </div>
 </body>
 </html>

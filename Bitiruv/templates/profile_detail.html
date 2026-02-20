@@ -1,0 +1,6 @@
+from django.contrib.auth.models import User 
+ 
+def profile_detail(request, username):
+    user_obj = get_object_or_404(User, username=username)
+    profile = get_object_or_404(Profile, user=user_obj)
+    return render(request, 'profile_detail.html', {'profile': profile, 'user_obj': user_obj})
