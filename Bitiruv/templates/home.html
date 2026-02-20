@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>Pythonchilar Bitiruv Platformasi</title>
+
+<style>
+body { margin:0; font-family:Arial; }
+
+.hero {
+    background: linear-gradient(135deg,#2b6cb0,#7b2ff7);
+    color:white;
+    text-align:center;
+    padding:120px 20px 100px;
+    position:relative;
+}
+
+.nav-links {
+    position:absolute;
+    top:20px;
+    right:30px;
+}
+
+.nav-links a, .nav-links button {
+    margin-left:10px;
+    padding:8px 15px;
+    border-radius:6px;
+    border:none;
+    text-decoration:none;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.nav-links a { background:white; color:#333; }
+.nav-links button { background:white; }
+
+.content {
+    padding:50px;
+    background:#f4f6f9;
+    min-height:300px;
+    text-align:center;
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+
+<div class="nav-links">
+{% if user.is_authenticated %}
+    <a href="{% url 'dashboard' %}">Dashboard</a>
+    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Chiqish</button>
+    </form>
+{% else %}
+    <a href="{% url 'login' %}">Kirish</a>
+    <a href="{% url 'register' %}">Ro‘yxatdan o‘tish</a>
+{% endif %}
+</div>
+
+<h1>🎓 Pythonchilar Bitiruv Loyihalari</h1>
+<p>Har bir bitiruvchining loyihasi va profili</p>
+
+</div>
+
+<div class="content">
+<h3>Platformaga xush kelibsiz!</h3>
+</div>
+
+</body>
+</html>

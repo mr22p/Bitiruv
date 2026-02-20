@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<style>
+body { font-family:Arial; background:#f4f6f9; padding:40px; }
+.card {
+    background:white;
+    padding:20px;
+    margin:15px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    display:inline-block;
+    width:250px;
+}
+</style>
+</head>
+<body>
+
+<h2>Salom {{ user.username }} 👋</h2>
+<h3>Bitiruvchilar:</h3>
+
+<div class="card">
+<h4>Ali Valiyev</h4>
+<p>Python Telegram Bot</p>
+</div>
+
+<div class="card">
+<h4>Madina Karimova</h4>
+<p>Django Web Project</p>
+</div>
+
+ {% if user.profile %}
+    <img src="{{ user.profile.image.url }}" width="150">
+    <h3>{{ user.profile.project_name }}</h3>
+    <p>{{ user.profile.project_description }}</p>
+
+    {% if user.profile.project_link %}
+        <a href="{{ user.profile.project_link }}" target="_blank">
+            Loyihani ko'rish
+        </a>
+    {% endif %}
+{% else %}
+    <a href="{% url 'create_profile' %}">Profil yaratish</a>
+{% endif %}
+
+</body>
+</html>

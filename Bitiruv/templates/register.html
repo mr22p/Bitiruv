@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ro'yxatdan o'tish</title>
+<style>
+body { display:flex; justify-content:center; align-items:center; height:100vh; background:#f4f6f9; font-family:Arial; }
+.card { background:white; padding:40px; border-radius:10px; width:350px; box-shadow:0 10px 30px rgba(0,0,0,0.1); }
+input { width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ddd; }
+button { width:100%; padding:10px; background:#7b2ff7; color:white; border:none; border-radius:6px; }
+</style>
+</head>
+<body>
+
+<div class="card">
+<h2>Ro'yxatdan o'tish</h2>
+
+<form method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit">Ro'yxatdan o'tish</button>
+</form>
+
+</div>
+</body>
+</html>
