@@ -1,91 +1,71 @@
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pythonchilar Bitiruv Platformasi</title>
+<meta charset="UTF-8">
+<title>Pythonchilar Bitiruv Platformasi</title>
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body { margin:0; font-family:Arial; }
 
-    <style>
-        body {
-            background: #f8f9fa;
-        }
+.hero {
+    background: linear-gradient(135deg,#2b6cb0,#7b2ff7);
+    color:white;
+    text-align:center;
+    padding:120px 20px 100px;
+    position:relative;
+}
 
-        .profile-card {
-            transition: 0.3s;
-            border-radius: 15px;
-        }
+.nav-links {
+    position:absolute;
+    top:20px;
+    right:30px;
+}
 
-        .profile-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
+.nav-links a, .nav-links button {
+    margin-left:10px;
+    padding:8px 15px;
+    border-radius:6px;
+    border:none;
+    text-decoration:none;
+    font-weight:bold;
+    cursor:pointer;
+}
 
-        .avatar {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-top: -60px;
-            border: 4px solid white;
-        }
+.nav-links a { background:white; color:#333; }
+.nav-links button { background:white; }
 
-        .header-section {
-            background: linear-gradient(135deg, #0d6efd, #6610f2);
-            color: white;
-            padding: 60px 0;
-            text-align: center;
-        }
-    </style>
+.content {
+    padding:50px;
+    background:#f4f6f9;
+    min-height:300px;
+    text-align:center;
+}
+</style>
 </head>
 <body>
 
-<!-- Header -->
-<div class="header-section">
-    <h1>🎓 Pythonchilar Bitiruv Loyihalari</h1>
-    <p>Har bir bitiruvchining loyihasi va profili</p>
+<div class="hero">
 
-    {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}" class="btn btn-light mt-3">Chiqish</a>
-    {% else %}
-        <a href="{% url 'login' %}" class="btn btn-light mt-3">Kirish</a>
-    {% endif %}
+<div class="nav-links">
+{% if user.is_authenticated %}
+    <a href="{% url 'dashboard' %}">Dashboard</a>
+    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Chiqish</button>
+    </form>
+{% else %}
+    <a href="{% url 'login' %}">Kirish</a>
+    <a href="{% url 'register' %}">Ro‘yxatdan o‘tish</a>
+{% endif %}
 </div>
 
-<!-- Profiles -->
-<div class="container mt-5">
-    <div class="row g-4">
+<h1>🎓 Pythonchilar Bitiruv Loyihalari</h1>
+<p>Har bir bitiruvchining loyihasi va profili</p>
 
-        {% for profile in profiles %}
-        <div class="col-md-4">
-            <div class="card profile-card text-center pt-5">
+</div>
 
-                {% if profile.avatar %}
-                    <img src="{{ profile.avatar.url }}" class="avatar mx-auto">
-                {% endif %}
-
-                <div class="card-body">
-                    <h5 class="card-title">
-                        {{ profile.user.username }}
-                    </h5>
-
-                    <p class="text-muted">{{ profile.group }}</p>
-
-                    <p>{{ profile.bio|truncatewords:15 }}</p>
-
-                    <a href="#" class="btn btn-primary"></a>
-                    </a>
-                </div>
-            </div>
-        </div>
-        {% empty %}
-        <p class="text-center">Hali bitiruvchilar qo'shilmagan.</p>
-        {% endfor %}
-
-    </div>
+<div class="content">
+<h3>Platformaga xush kelibsiz!</h3>
 </div>
 
 </body>
