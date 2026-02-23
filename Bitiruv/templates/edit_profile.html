@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profilni tahrirlash</title>
+</head>
+<body>
+
+<h2>Profilni tahrirlash</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Saqlash</button>
+</form>
+
+<br>
+<a href="{% url 'dashboard' %}">Orqaga</a>
+
+</body>
+</html>

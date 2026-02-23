@@ -119,28 +119,7 @@
     <h3>Bitiruvchilar:</h3>
 
     <div class="cards">
-
-      <!-- 1-karta -->
-      <a class="card-link" href="{% url 'profile_detail' username='ali' %}">
-        <div class="card">
-          <h4>Ali Valiyev</h4>
-          <p class="muted">Python Telegram Bot</p>
-          <span class="pill">Profilga kirish</span>
-        </div>
-      </a>
-
-      <!-- 2-karta -->
-      <a class="card-link" href="{% url 'profile_detail' username='madina' %}">
-        <div class="card">
-          <h4>Madina Karimova</h4>
-          <p class="muted">Django Web Project</p>
-          <span class="pill">Profilga kirish</span>
-        </div>
-      </a>
-
-      <!-- Agar sizda bazadan profillar ro'yxati kelsa, yuqoridagi 2 ta kartani olib tashlab,
-           shu for-loopni ishlatasiz:
-
+      
       {% for p in profiles %}
         <a class="card-link" href="{% url 'profile_detail' username=p.user.username %}">
           <div class="card">
@@ -149,9 +128,7 @@
             <span class="pill">Profilga kirish</span>
           </div>
         </a>
-      {% endfor %}
-
-      -->
+      {% endfor %} 
 
     </div>
 
@@ -194,7 +171,23 @@
         <a class="btn" href="{% url 'create_profile' %}">Profil yaratish</a>
       </div>
     {% endif %}
-
   </div>
+   <a href="{% url 'home' %}" style="position: fixed; top: 20px; left: 20px; background: #2563eb; color: white; padding: 10px 14px; border-radius: 10px; text-decoration: none;">Bosh sahifa</a>
 </body>
 </html>
+
+{% if my_profile %}
+    <a href="{% url 'profile_detail' request.user.username %}">
+        Profilni ko‘rish
+    </a>
+
+    <br><br>
+
+    <a href="{% url 'edit_profile' %}">
+        Profilni tahrirlash
+    </a>
+{% else %}
+    <a href="{% url 'create_profile' %}">
+        Profil yaratish
+    </a>
+{% endif %}

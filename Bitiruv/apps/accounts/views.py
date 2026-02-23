@@ -65,5 +65,18 @@ def create_profile(request):
     else:
         form = ProfileForm()
 
-    return render(request, 'profile_create.html', {'form': form})
+    return render(request, 'create_profile.html', {'form': form})
 
+@login_required
+def edit_profile(request):
+    profile = get_object_or_404(Profile, user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile_detail', username=request.user.username)
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, 'edit_profile.html', {'form': form})

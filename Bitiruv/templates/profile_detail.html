@@ -1,6 +1,25 @@
-from django.contrib.auth.models import User 
- 
-def profile_detail(request, username):
-    user_obj = get_object_or_404(User, username=username)
-    profile = get_object_or_404(Profile, user=user_obj)
-    return render(request, 'profile_detail.html', {'profile': profile, 'user_obj': user_obj})
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ user_obj.username }} profili</title>
+</head>
+<body>
+
+<h2>{{ user_obj.username }}</h2>
+
+<img src="{{ profile.image.url }}" width="150">
+
+<h3>{{ profile.project_name }}</h3>
+<p>{{ profile.project_description }}</p>
+
+{% if profile.project_link %}
+    <a href="{{ profile.project_link }}" target="_blank">
+        Loyihani ko'rish
+    </a>
+{% endif %}
+
+<br><br>
+<a href="{% url 'home' %}">Orqaga</a>
+
+</body>
+</html>
